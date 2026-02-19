@@ -34,5 +34,12 @@ public function index(TacheRepository $tacheRepository): Response
         'taches' => $taches,
     ]);
 }
+#[Route('/taches/{id}', name: 'app_tache_detail', requirements: ['id' => '\d+'])]
+public function detail(Tache $tache): Response
+{
+    return $this->render('tache/detail.html.twig', [
+        'tache' => $tache,
+    ]);
+}
 
 }
