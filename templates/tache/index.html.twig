@@ -22,7 +22,8 @@
                 </thead>
                 <tbody>
                     {% for tache in taches %}
-                        <tr>
+                        <tr {% if tache.terminee %}
+                        style="text-decoration: line-through;"{% endif %}>
                             <td class="text-center">{{ tache.id }}</td>
                             <td>{{ tache.titre }}</td>
                             <td>{{ tache.deteCreation|date('d/m/Y') }}</td>

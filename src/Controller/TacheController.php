@@ -29,6 +29,7 @@ public function nouveau(EntityManagerInterface $em): Response
 public function index(TacheRepository $tacheRepository): Response
 {
     $taches = $tacheRepository->findAll();
+    $taches = $tacheRepository->findBy([], ['terminee' => 'ASC']);
 
     return $this->render('tache/index.html.twig', [
         'taches' => $taches,
@@ -39,6 +40,17 @@ public function detail(Tache $tache): Response
 {
     return $this->render('tache/detail.html.twig', [
         'tache' => $tache,
+    ]);
+}
+#[Route('/taches/{id}/terminee', name: 'app_tache_terminer', requirements: ['id' => '\d+'])]
+public function terminer(Tache $tache,TacheRepository $tacheRepository,EntityManagerInterface $em): Response
+{
+    $tache->setTerminee(TRUE);
+    $em->persist($tache);
+    $em->flush();
+    $taches = $tacheRepository->findAll();
+    return $this->render('tache/index.html.twig', [
+        'taches' => $taches,
     ]);
 }
 
